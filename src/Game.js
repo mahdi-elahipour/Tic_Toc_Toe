@@ -19,6 +19,7 @@ font-size:24px;
 color:green;
 `
 const allChoice=[0,1,2,3,4,5,6,7,8]
+let com;
 function Game(props) {
     const [computerChoice, setComputerChoice] = useState([]);
     const [userChoice, setUserChoice] = useState([]);
@@ -26,31 +27,35 @@ function Game(props) {
     const [currentMove, setCurrentMove] = useState(0);
     let currentSquares = history[currentMove];
     let xIsNext = currentMove % 2;
-
-
-//
-useEffect(()=>{
-        let cm;
-        cm = Math.floor(Math.random() * computerChoice.length);
+    
+    
+    //
+    
+    useEffect(()=>{
+        const cm = Math.floor(Math.random() * computerChoice.length);
         xIsNext && setTimeout(() => {
             
             clickHandler(computerChoice[cm],'computer');
-
+            
         }, 1000);
+        
+        com && setComputerChoice([...com])
+        
     })
+    
     function clickHandler(i,type='user') {
         
         const nextSquares = currentSquares.slice();
         if (nextSquares[i] || winner) return;
         xIsNext ?
-            nextSquares[i] = 'X'
-            :
-            nextSquares[i] = 'O';
-            handlePlay(nextSquares,i,type)
+        nextSquares[i] = 'X'
+        :
+        nextSquares[i] = 'O';
+        handlePlay(nextSquares,i,type)
     }
-
-
-
+    
+    
+    
     function handlePlay(nextSquares, i,type) {
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
         setHistory(nextHistory);
@@ -59,10 +64,9 @@ useEffect(()=>{
         //Normal player choices are stored in an array
        if(type==='user') setUserChoice([...userChoice, i]);
         // "com" is The squares that the computer player has the right to choose
-        const com = allChoice.filter(e => {
+        com=allChoice.filter(e => {
             return !userChoice.includes(e)
         })
-        setComputerChoice([...com])
         // console.log(com)
 }
   
