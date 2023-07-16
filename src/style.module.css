@@ -1,0 +1,25 @@
+.green{
+   animation: winAnim .5s ease-in-out infinite;
+    background-color: rgb(77, 209, 77);
+    border-color: green;
+    border-radius: 50%;
+}
+@keyframes winAnim {
+    0%{background-color: white;color:green;}
+    50%{background-color: green;color:white;}
+    100%{background-color: white;color:green;}
+}
+.noclick{
+    cursor: not-allowed;
+  
+}
+.board{
+    display:flex;
+    flex-direction:column;
+animation: boardAnim 1s;
+}
+@keyframes boardAnim {
+    0%{margin-top: 0px;}
+    50%{margin-top: -30px;}
+    100%{margin-top: 30px;}
+}
