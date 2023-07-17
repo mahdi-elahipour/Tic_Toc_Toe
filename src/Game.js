@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import Board from './Board';
 import History from './History';
 import styled from 'styled-components';
@@ -28,48 +28,21 @@ function Game(props) {
     let currentSquares = history[currentMove];
     let xIsNext = currentMove % 2;
     
-    
-    //
-    
-    useEffect(()=>{
-        const cm = Math.floor(Math.random() * computerChoice.length);
-        xIsNext && setTimeout(() => {
-            
-            clickHandler(computerChoice[cm],'computer');
-            
-        }, 1000);
-        
-        com && setComputerChoice([...com])
-        
-    })
-    
-    function clickHandler(i,type='user') {
-        
-        const nextSquares = currentSquares.slice();
-        if (nextSquares[i] || winner) return;
-        xIsNext ?
-        nextSquares[i] = 'X'
-        :
-        nextSquares[i] = 'O';
-        handlePlay(nextSquares,i,type)
-    }
-    
-    
-    
     function handlePlay(nextSquares, i,type) {
         const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
         setHistory(nextHistory);
         setCurrentMove(nextHistory.length - 1);
         xIsNext = currentMove % 2;
         //Normal player choices are stored in an array
-       if(type==='user') setUserChoice([...userChoice, i]);
+        if(type==='user') setUserChoice([...userChoice, i]);
         // "com" is The squares that the computer player has the right to choose
         com=allChoice.filter(e => {
             return !userChoice.includes(e)
         })
-        // console.log(com)
-}
-  
+        setComputerChoice([...com])
+        
+    }
+    
     let status = '';
 
     const winner = calculateWinner(currentSquares);
@@ -109,14 +82,11 @@ function Game(props) {
             }
         }
     }
-
-
-    ///
     
     return (
         <div className={style.board}>
             <Container>
-                <Board winner={calculateWinner(currentSquares)} clickHandler={clickHandler} squares={currentSquares} />
+                <Board handlePlay={handlePlay} xIsNext={xIsNext} computerChoice={computerChoice} winner={calculateWinner(currentSquares)} squares={currentSquares} />
                 <History history={history} setCurrentMove={setCurrentMove} xIsNext={xIsNext} currentMove={currentMove} />
             </Container>
             <StatusContainer>{status}</StatusContainer>

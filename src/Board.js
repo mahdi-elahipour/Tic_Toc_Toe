@@ -7,8 +7,8 @@ height:300px;
 display:flex;
 flex-wrap:wrap;
 `
-function Board({ squares,winner,clickHandler }) {
-    
+function Board({ squares,winner,xIsNext,computerChoice,handlePlay }) {
+
     function createSquare(squares) {
 
         return squares.map((element, index) => {
@@ -17,8 +17,12 @@ function Board({ squares,winner,clickHandler }) {
             winner={winner} 
             key={index} 
             index={index}  
-            handleClick={() => clickHandler(index,'user')} 
-            value={element} />
+            value={element}
+            currentSquares={squares}
+            computerChoice={computerChoice}
+            xIsNext={xIsNext}
+            handlePlay={handlePlay}
+            />
        
         })
     }
@@ -28,8 +32,7 @@ function Board({ squares,winner,clickHandler }) {
         
         <BoardContainer>
             {createSquare(squares)}
-        </BoardContainer>
-       
+        </BoardContainer>  
    
     );
 }
