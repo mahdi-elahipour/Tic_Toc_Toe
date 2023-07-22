@@ -82,7 +82,6 @@ function Game(props) {
             }
         }
     }
-    
     return (
         <div className={style.board}>
             <Container>
